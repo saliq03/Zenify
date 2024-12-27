@@ -39,7 +39,7 @@ class _GetStartedPageState extends State<GetStartedPage> {
                       child: SvgPicture.asset(AppVectors.logo)),
                   const Spacer(),
                   const Text("Enjoy Listening To Music",
-                    style:TextStyle(color: Colors.white,fontWeight: FontWeight.w600,fontSize: 25) ,),
+                    style:TextStyle(color: Colors.white,fontWeight: FontWeight.w600,fontSize: 24) ,),
                   const SizedBox(height: 21,),
                   const Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." ,
                       style:TextStyle(color: AppColors.grey,fontSize: 17,fontWeight: FontWeight.w400),

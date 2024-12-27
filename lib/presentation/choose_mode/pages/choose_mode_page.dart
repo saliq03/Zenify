@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:spotify/presentation/signup_or_signin/pages/signup_or_signin_page.dart';
 
 import '../../../common/widgets/buttons/basic_app_button.dart';
 import '../../../core/configs/assets/app_images.dart';
@@ -89,7 +90,9 @@ class _ChooseModePageState extends State<ChooseModePage> {
                     ],
                   ),
                   const SizedBox(height: 68),
-                  BasicAppButton(title: "Continue", onPress: (){})
+                  BasicAppButton(title: "Continue", onPress: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>const SignupOrSigninPage()));
+                  })
 
 
                 ],
