@@ -9,14 +9,10 @@ import '../../../core/configs/assets/app_images.dart';
 import '../../../core/configs/assets/app_vectors.dart';
 
 
-class ChooseModePage extends StatefulWidget {
+
+class ChooseModePage extends StatelessWidget{
   const ChooseModePage({super.key});
 
-  @override
-  State<ChooseModePage> createState() => _ChooseModePageState();
-}
-
-class _ChooseModePageState extends State<ChooseModePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

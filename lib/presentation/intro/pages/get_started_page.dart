@@ -7,14 +7,11 @@ import 'package:spotify/presentation/choose_mode/pages/choose_mode_page.dart';
 
 import '../../../core/configs/theme/app_colors.dart';
 
-class GetStartedPage extends StatefulWidget {
+
+
+class GetStartedPage extends StatelessWidget {
   const GetStartedPage({super.key});
 
-  @override
-  State<GetStartedPage> createState() => _GetStartedPageState();
-}
-
-class _GetStartedPageState extends State<GetStartedPage> {
   @override
   Widget build(BuildContext context) {
     return  Scaffold(

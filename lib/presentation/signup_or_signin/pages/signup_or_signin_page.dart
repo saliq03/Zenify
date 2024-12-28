@@ -5,15 +5,14 @@ import 'package:spotify/common/widgets/appbar/basic_appbar.dart';
 import 'package:spotify/common/widgets/buttons/basic_app_button.dart';
 import 'package:spotify/core/configs/assets/app_images.dart';
 import 'package:spotify/core/configs/assets/app_vectors.dart';
+import 'package:spotify/presentation/signup_or_signin/pages/signin_page.dart';
+import 'package:spotify/presentation/signup_or_signin/pages/signup_page.dart';
 
-class SignupOrSigninPage extends StatefulWidget {
+
+
+class SignupOrSigninPage extends StatelessWidget {
   const SignupOrSigninPage({super.key});
 
-  @override
-  State<SignupOrSigninPage> createState() => _SignupOrSigninPageState();
-}
-
-class _SignupOrSigninPageState extends State<SignupOrSigninPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,8 +44,12 @@ class _SignupOrSigninPageState extends State<SignupOrSigninPage> {
                     children: [
                       Expanded(
                         flex:1,
-                          child: BasicAppButton(title: "Register", onPress: (){}, height: 70,)),
-                      const SizedBox(width: 30,),TextButton(onPressed: (){}, child: Text("Sign in",style: TextStyle(fontSize: 19,fontWeight: FontWeight.w500,color: context.isDarkMode? Colors.white:Colors.black),))
+                          child: BasicAppButton(title: "Register", onPress: (){
+                            Navigator.push(context, MaterialPageRoute(builder: (context)=>const SignupPage()));
+                          }, height: 70,)),
+                      const SizedBox(width: 30,),TextButton(onPressed: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>const SignInPage()));
+                      }, child: Text("Sign in",style: TextStyle(fontSize: 19,fontWeight: FontWeight.w500,color: context.isDarkMode? Colors.white:Colors.black),))
                     ],
                   )
                 ],
