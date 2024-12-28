@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:spotify/common/helpers/is_dark_mode.dart';
+import 'package:spotify/presentation/signup_or_signin/pages/signup_page.dart';
 
 import '../../../common/widgets/appbar/basic_appbar.dart';
 import '../../../common/widgets/buttons/basic_app_button.dart';
@@ -66,11 +67,13 @@ class SignInPage extends StatelessWidget {
                         context.isDarkMode?Colors.white:Colors.black, BlendMode.srcIn),),
 
                   ],),
-                const SizedBox(height: 31,),
+                const SizedBox(height: 50,),
                 Row(mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Text("Not A Member?",style: TextStyle(fontSize: 15,fontWeight: FontWeight.w500)),
-                    TextButton(onPressed: (){}, child: const Text("Register Now",style:TextStyle(fontSize: 15,color: Color(0xff288CE9),fontWeight: FontWeight.w500),))
+                    TextButton(onPressed: (){
+                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (_)=>const SignupPage()));
+                    }, child: const Text("Register Now",style:TextStyle(fontSize: 15,color: Color(0xff288CE9),fontWeight: FontWeight.w500),))
                   ],
                 )
               ],

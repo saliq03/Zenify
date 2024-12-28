@@ -4,6 +4,7 @@ import 'package:spotify/common/helpers/is_dark_mode.dart';
 import 'package:spotify/common/widgets/appbar/basic_appbar.dart';
 import 'package:spotify/common/widgets/buttons/basic_app_button.dart';
 import 'package:spotify/core/configs/assets/app_vectors.dart';
+import 'package:spotify/presentation/signup_or_signin/pages/signin_page.dart';
 
 class SignupPage extends StatelessWidget {
   const SignupPage({super.key});
@@ -50,7 +51,7 @@ class SignupPage extends StatelessWidget {
                 const SizedBox(height: 33,),
                 BasicAppButton(title: "Create Account", onPress: (){}),
                 const SizedBox(height: 29,),
-                Row(
+                const Row(
                   children: [
                     Expanded(child: Divider(color: Colors.grey,height: 1,)),
                     Text("  Or  ",style: TextStyle(fontSize: 12,fontWeight: FontWeight.w400),),
@@ -71,7 +72,9 @@ class SignupPage extends StatelessWidget {
                 Row(mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Text("Do You Have An Account?",style: TextStyle(fontSize: 15,fontWeight: FontWeight.w500)),
-                    TextButton(onPressed: (){}, child: const Text("Sign In",style:TextStyle(fontSize: 15,color: Color(0xff288CE9),fontWeight: FontWeight.w500),))
+                    TextButton(onPressed: (){
+                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (_)=>const SignInPage()));
+                    }, child: const Text("Sign In",style:TextStyle(fontSize: 15,color: Color(0xff288CE9),fontWeight: FontWeight.w500),))
                   ],
                 )
               ],
