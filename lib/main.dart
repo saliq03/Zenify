@@ -6,7 +6,6 @@ import 'package:spotify/presentation/splash/pages/splash_page.dart';
 
 import 'firebase_options.dart';
 
-
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: ".env");
