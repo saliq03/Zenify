@@ -1,16 +1,19 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:spotify/business/usecases/auth/signin_with_email.dart';
 import 'package:spotify/common/helpers/is_dark_mode.dart';
+import 'package:spotify/data/models/login_user_request.dart';
 import 'package:spotify/presentation/signup_or_signin/pages/signup_page.dart';
 
 import '../../../common/widgets/appbar/basic_appbar.dart';
 import '../../../common/widgets/buttons/basic_app_button.dart';
 import '../../../core/configs/assets/app_vectors.dart';
+import '../../../service_locator.dart';
 
 class SignInPage extends StatelessWidget {
-  const SignInPage({super.key});
-
+  SignInPage({super.key});
+ final emailController=TextEditingController();
+ final passwordController=TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,6 +30,7 @@ class SignInPage extends StatelessWidget {
                 const SizedBox(height: 50,),
 
                 TextFormField(
+                  controller: emailController,
                   decoration: const InputDecoration(
                       hintText: "Enter Username Or Email"
                   ).applyDefaults(
@@ -35,6 +39,7 @@ class SignInPage extends StatelessWidget {
                 ),
                 const SizedBox(height: 16,),
                 TextFormField(
+                  controller: passwordController,
                   decoration: const InputDecoration(
                       hintText: "Enter Password"
                   ).applyDefaults(
@@ -48,7 +53,25 @@ class SignInPage extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 10),
-                BasicAppButton(title: "Sign In", onPress: (){}),
+                BasicAppButton(title: "Sign In", onPress: () async {
+                  var result =await sL<SigninWithEmailPasswordUseCase>().call(
+                    params: LoginUserRequest(
+                        email: emailController.text.toString(),
+                        password: passwordController.text.toString())
+                  );
+                  result.fold(
+                          (l){
+                        ScaffoldMessenger.of(context).
+                        showSnackBar(SnackBar(content: Text(l),
+                          backgroundColor: Colors.redAccent,));
+                      },
+                          (r){
+                        ScaffoldMessenger.of(context).
+                        showSnackBar(SnackBar(content: Text(r),
+                          backgroundColor: Colors.green,));
+
+                      });
+                }),
                 const SizedBox(height: 29,),
                 Row(
                   children: [
@@ -72,7 +95,7 @@ class SignInPage extends StatelessWidget {
                   children: [
                     const Text("Not A Member?",style: TextStyle(fontSize: 15,fontWeight: FontWeight.w500)),
                     TextButton(onPressed: (){
-                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (_)=>const SignupPage()));
+                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (_)=>SignupPage()));
                     }, child: const Text("Register Now",style:TextStyle(fontSize: 15,color: Color(0xff288CE9),fontWeight: FontWeight.w500),))
                   ],
                 )

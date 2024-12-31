@@ -1,14 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:spotify/business/usecases/auth/signup_with_EmailPassword.dart';
 import 'package:spotify/common/helpers/is_dark_mode.dart';
 import 'package:spotify/common/widgets/appbar/basic_appbar.dart';
 import 'package:spotify/common/widgets/buttons/basic_app_button.dart';
 import 'package:spotify/core/configs/assets/app_vectors.dart';
+import 'package:spotify/data/models/creat_user_request.dart';
 import 'package:spotify/presentation/signup_or_signin/pages/signin_page.dart';
+import 'package:spotify/service_locator.dart';
 
 class SignupPage extends StatelessWidget {
-  const SignupPage({super.key});
+   SignupPage({super.key});
 
+   final nameController=TextEditingController();
+   final emailController=TextEditingController();
+   final passwordController=TextEditingController();
 
 
   @override
@@ -26,6 +32,7 @@ class SignupPage extends StatelessWidget {
                   const Text("Register",style: TextStyle(fontSize: 30,fontWeight: FontWeight.w600,),),
                   const SizedBox(height: 50,),
                   TextFormField(
+                    controller: nameController,
                    decoration: const InputDecoration(
                      hintText: "Full Name"
                    ).applyDefaults(
@@ -34,6 +41,7 @@ class SignupPage extends StatelessWidget {
                   ),
                 const SizedBox(height: 16,),
                 TextFormField(
+                  controller: emailController,
                   decoration: const InputDecoration(
                       hintText: "Enter Email"
                   ).applyDefaults(
@@ -42,6 +50,7 @@ class SignupPage extends StatelessWidget {
                 ),
                 const SizedBox(height: 16,),
                 TextFormField(
+                  controller: passwordController,
                   decoration: const InputDecoration(
                       hintText: "Enter Password"
                   ).applyDefaults(
@@ -49,7 +58,25 @@ class SignupPage extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 33,),
-                BasicAppButton(title: "Create Account", onPress: (){}),
+                BasicAppButton(title: "Create Account", onPress: () async {
+                  var result= await sL<SignupWithEmailPasswordUseCase>().call(
+                    params: CreateUserRequest(name: nameController.text.toString(),
+                        email: emailController.text.toString(),
+                        password: passwordController.text.toString())
+                  );
+                  result.fold(
+                      (l){
+                        ScaffoldMessenger.of(context).
+                        showSnackBar(SnackBar(content: Text(l),
+                            backgroundColor: Colors.redAccent,));
+                      },
+                          (r){
+                              ScaffoldMessenger.of(context).
+                              showSnackBar(SnackBar(content: Text(r),
+                                backgroundColor: Colors.green,));
+
+                      });
+                }),
                 const SizedBox(height: 29,),
                 const Row(
                   children: [
@@ -73,7 +100,7 @@ class SignupPage extends StatelessWidget {
                   children: [
                     const Text("Do You Have An Account?",style: TextStyle(fontSize: 15,fontWeight: FontWeight.w500)),
                     TextButton(onPressed: (){
-                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (_)=>const SignInPage()));
+                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (_)=>SignInPage()));
                     }, child: const Text("Sign In",style:TextStyle(fontSize: 15,color: Color(0xff288CE9),fontWeight: FontWeight.w500),))
                   ],
                 )
