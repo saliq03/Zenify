@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:spotify/business/usecases/auth/signin_with_email.dart';
 import 'package:spotify/common/helpers/is_dark_mode.dart';
 import 'package:spotify/data/models/login_user_request.dart';
+import 'package:spotify/presentation/home/pages/home.dart';
 import 'package:spotify/presentation/signup_or_signin/pages/signup_page.dart';
 
 import '../../../common/widgets/appbar/basic_appbar.dart';
@@ -61,10 +62,13 @@ class SignInPage extends StatelessWidget {
                   );
                   result.fold(
                           (l){
-                        ScaffoldMessenger.of(context).
-                        showSnackBar(SnackBar(content: Text(l),
-                          backgroundColor: Colors.redAccent,));
-                      },
+                            Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(builder: (context) => HomePage()),
+                                  (Route<dynamic> route) => false,
+                            );
+
+                          },
                           (r){
                         ScaffoldMessenger.of(context).
                         showSnackBar(SnackBar(content: Text(r),
