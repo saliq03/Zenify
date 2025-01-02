@@ -68,15 +68,16 @@ class SignupPage extends StatelessWidget {
                   );
                   result.fold(
                       (l){
-                        Navigator.pushAndRemoveUntil(
-                            context,
-                            MaterialPageRoute(builder: (context)=>HomePage()),
-                                (Route<dynamic> route) => false);
+                        ScaffoldMessenger.of(context).
+                        showSnackBar(SnackBar(content: Text(l),
+                          backgroundColor: Colors.red,));
                       },
                           (r){
-                              ScaffoldMessenger.of(context).
-                              showSnackBar(SnackBar(content: Text(r),
-                                backgroundColor: Colors.green,));
+                            Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(builder: (context)=>HomePage()),
+                                    (Route<dynamic> route) => false);
+
 
                       });
                 }),

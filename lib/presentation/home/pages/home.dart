@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spotify/common/helpers/is_dark_mode.dart';
+import 'package:spotify/main.dart';
+import 'package:spotify/presentation/home/bloc/home_bloc.dart';
 
 import 'package:spotify/presentation/home/widgets/artist_box.dart';
 
@@ -17,6 +20,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
   @override
   void initState() {
     tabController=TabController(length: 4, vsync: this);
+    context.read<HomeBloc>().add(FetchNewsSongs());
     super.initState();
   }
   @override
