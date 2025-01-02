@@ -55,26 +55,32 @@ class SignInPage extends StatelessWidget {
                 ),
                 const SizedBox(height: 10),
                 BasicAppButton(title: "Sign In", onPress: () async {
+
+                  Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(builder: (context) => HomePage()),
+                          (Route<dynamic> route) => false);
+
+
                   var result =await sL<SigninWithEmailPasswordUseCase>().call(
                     params: LoginUserRequest(
                         email: emailController.text.toString(),
                         password: passwordController.text.toString())
                   );
-                  result.fold(
-                          (l){
-                            Navigator.pushAndRemoveUntil(
-                              context,
-                              MaterialPageRoute(builder: (context) => HomePage()),
-                                  (Route<dynamic> route) => false,
-                            );
-
-                          },
-                          (r){
-                        ScaffoldMessenger.of(context).
-                        showSnackBar(SnackBar(content: Text(r),
-                          backgroundColor: Colors.green,));
-
-                      });
+                  // result.fold(
+                  //         (l){
+                  //           Navigator.pushAndRemoveUntil(
+                  //             context,
+                  //             MaterialPageRoute(builder: (context) => HomePage()),
+                  //                 (Route<dynamic> route) => false);
+                  //
+                  //         },
+                  //         (r){
+                  //       ScaffoldMessenger.of(context).
+                  //       showSnackBar(SnackBar(content: Text(r),
+                  //         backgroundColor: Colors.green,));
+                  //
+                  //     });
                 }),
                 const SizedBox(height: 29,),
                 Row(

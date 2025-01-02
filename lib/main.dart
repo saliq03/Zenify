@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:spotify/core/configs/theme/app_theme.dart';
+import 'package:spotify/presentation/home/pages/home.dart';
 import 'package:spotify/presentation/splash/pages/splash_page.dart';
 import 'package:spotify/service_locator.dart';
 
@@ -27,7 +28,7 @@ class MyApp extends StatelessWidget {
       title: 'Spotify',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.darkTheme,
-      home: const SplashPage(),
+      home: const HomePage(),
     );
   }
 }

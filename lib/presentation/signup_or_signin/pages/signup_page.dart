@@ -9,6 +9,8 @@ import 'package:spotify/data/models/creat_user_request.dart';
 import 'package:spotify/presentation/signup_or_signin/pages/signin_page.dart';
 import 'package:spotify/service_locator.dart';
 
+import '../../home/pages/home.dart';
+
 class SignupPage extends StatelessWidget {
    SignupPage({super.key});
 
@@ -66,9 +68,10 @@ class SignupPage extends StatelessWidget {
                   );
                   result.fold(
                       (l){
-                        ScaffoldMessenger.of(context).
-                        showSnackBar(SnackBar(content: Text(l),
-                            backgroundColor: Colors.redAccent,));
+                        Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(builder: (context)=>HomePage()),
+                                (Route<dynamic> route) => false);
                       },
                           (r){
                               ScaffoldMessenger.of(context).
