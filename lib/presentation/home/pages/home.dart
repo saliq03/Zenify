@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spotify/common/helpers/is_dark_mode.dart';
+import 'package:spotify/core/configs/constants/status.dart';
 import 'package:spotify/main.dart';
 import 'package:spotify/presentation/home/bloc/home_bloc.dart';
 
@@ -48,7 +49,54 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                   Text("Artists",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w600,),),
                   Text("Podcast",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w600,),)
             ]),
-          )
+          ),
+            BlocBuilder<HomeBloc, HomeState>(
+            builder: (context, state) {
+
+              if(state.status==Status.loading){
+                return const Center(child: CircularProgressIndicator());
+              }
+              else if(state.status==Status.sucess){
+                return
+                  SizedBox(
+                    height: 245,
+                  child: ListView.separated(
+                      scrollDirection: Axis.horizontal,
+                      shrinkWrap: true,
+                      itemBuilder: (context,index){
+                        var song=state.songs[index];
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(
+                              child: Container(
+                                width: 150,
+                                decoration: BoxDecoration(
+                                  color: Colors.red,
+                                  borderRadius: BorderRadius.circular(30),
+                                  image: DecorationImage(
+                                    fit: BoxFit.cover,
+                                      image: NetworkImage(song.image))
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 10,),
+                            Text(song.title,style: TextStyle(fontSize: 16,fontWeight: FontWeight.w600),),
+                            Text(song.artist,style: TextStyle(fontSize: 14,fontWeight: FontWeight.w400),)
+                          ],
+                        );
+                      },
+                      separatorBuilder: (context,index){
+                        return const SizedBox(width: 14,);
+                      },
+                      itemCount: state.songs.length),
+                );
+              }else{
+                return const Center(child: Text("Something went wrong",style: TextStyle(color: Colors.white),));
+              }
+
+  },
+)
           ],
         ),
       )
