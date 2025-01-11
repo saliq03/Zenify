@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:spotify/common/helpers/is_dark_mode.dart';
 
 class BasicAppbar extends StatelessWidget implements PreferredSizeWidget{
-  const BasicAppbar({super.key,this.title,this.hideback=false});
+  const BasicAppbar({super.key,this.title,this.hideback=false,this.action});
   final Widget? title;
   final bool hideback;
+  final Widget? action;
   @override
   Widget build(BuildContext context) {
     return AppBar(
@@ -29,7 +30,10 @@ class BasicAppbar extends StatelessWidget implements PreferredSizeWidget{
               size: 15,
               color: context.isDarkMode?Colors.white:Colors.black,),
             ) ,
-          ),)
+          ),),
+      actions: [
+        action??Container()
+      ],
     );
   }
 
