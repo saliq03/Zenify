@@ -3,6 +3,7 @@ import 'package:spotify/business/repository/auth/auth.dart';
 import 'package:spotify/business/repository/song/song.dart';
 import 'package:spotify/business/usecases/auth/signup_with_EmailPassword.dart';
 import 'package:spotify/business/usecases/song/get_news_songs.dart';
+import 'package:spotify/business/usecases/song/get_playlist.dart';
 import 'package:spotify/data/repository/auth/auth.dart';
 import 'package:spotify/data/repository/song/song.dart';
 import 'package:spotify/data/sources/auth/auth_firebase_service.dart';
@@ -34,5 +35,7 @@ Future<void> initializeDependencies()async{
 
   sL.registerSingleton<GetNewsSongsUseCase>(
       GetNewsSongsUseCase());
+  sL.registerSingleton<GetPlaylistUseCase>(
+      GetPlaylistUseCase());
 
 }

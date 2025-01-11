@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../../common/widgets/appbar/basic_appbar.dart';
 import '../../../core/configs/assets/app_images.dart';
@@ -10,19 +11,13 @@ class ArtistBoxWidgetHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return  SizedBox(
-      height: 246,
+      height: 180,
       child: Stack(
         children: [
           Align(
             alignment:Alignment.bottomCenter,
-            child: Column(
-              children: [
-                BasicAppbar(title: SvgPicture.asset(AppVectors.logo,height: 40,),),
-                const SizedBox(height: 20,),
-                SvgPicture.asset(
-                    AppVectors.homeTopBox
-                ),
-              ],
+            child: SvgPicture.asset(
+                AppVectors.homeTopBox
             ),
           ),
           Align(
