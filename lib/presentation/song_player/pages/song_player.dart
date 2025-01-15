@@ -7,6 +7,7 @@ import 'package:spotify/common/widgets/appbar/basic_appbar.dart';
 import 'package:spotify/core/configs/theme/app_colors.dart';
 
 import 'package:spotify/presentation/song_player/bloc/song_player_bloc.dart';
+import 'package:spotify/presentation/song_player/widgets/controls.dart';
 import 'package:spotify/presentation/song_player/widgets/song_cover.dart';
 import 'package:spotify/presentation/song_player/widgets/song_detail.dart';
 
@@ -62,55 +63,10 @@ class _SongPlayerPageState extends State<SongPlayerPage> {
               const SizedBox(height: 20,),
               BlocBuilder<SongPlayerBloc, SongPlayerState>(
                 builder: (context, state) {
-                  return Column(
-                    children: [
-                      Slider(value: state.position.inSeconds.toDouble(),
-                          min: 0.0,
-                          max: state.duration.inSeconds.toDouble(),
-                          activeColor: context.isDarkMode? Colors.white:AppColors.darkGrey,
-                          onChanged: (value){
-                            final newPosition = Duration(seconds: value.toInt());
-                            context.read<SongPlayerBloc>().add(ChangePositon(newPosition: newPosition));
-                          },
-                      ),
-
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                          Text(formatDuration(state.position),style:  TextStyle(fontWeight: FontWeight.w600,fontSize: 12,color: context.isDarkMode?Colors.grey: AppColors.darkGrey),),
-                            Text(formatDuration(state.duration),style:  TextStyle(fontWeight: FontWeight.w600,fontSize: 12,color: context.isDarkMode?Colors.grey: AppColors.darkGrey))
-                        ],),
-                      ),
-                      const SizedBox(height: 10,),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 30),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            IconButton(onPressed: (){}, icon: Icon(Icons.repeat_rounded,color: context.isDarkMode?Colors.grey: AppColors.darkGrey)),
-                            IconButton(onPressed: (){}, icon: Icon(Icons.skip_previous,size: 35,color: context.isDarkMode?AppColors.grey:AppColors.darkGrey)),
-                            GestureDetector(
-                              onTap: (){
-                                context.read<SongPlayerBloc>().add(PlayOrPause());
-                              },
-                              child: Container(
-                                height:70,width:70,
-                                decoration: const BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: AppColors.primary,
-                                ),
-                                child:player.playing? const Icon(Icons.pause,color: AppColors.darkGrey,size: 30,):
-                                const Icon(Icons.play_arrow,color: Colors.white,size: 40,),
-                              ),
-                            ),
-                            IconButton(onPressed: (){}, icon: Icon(Icons.skip_next,size: 35,color: context.isDarkMode?AppColors.grey:AppColors.darkGrey,)),
-                            IconButton(onPressed: (){}, icon: Icon(Icons.shuffle,color: context.isDarkMode?Colors.grey: AppColors.darkGrey)),
-                          ],
-                        ),
-                      )
-                    ],
-                  );
+                  return ControlsWidget(
+                      position: state.position,
+                      duration: state.duration,
+                      player: player);
                 },
               ),
               
@@ -121,9 +77,5 @@ class _SongPlayerPageState extends State<SongPlayerPage> {
     );
   }
 
-  String formatDuration(Duration duration){
-    final minutes=duration.inMinutes.remainder(60);
-    final seconds=duration.inSeconds.remainder(60);
-    return "${minutes.toString().padLeft(2,"0")}:${seconds.toString().padLeft(2,"0")}";
-  }
+
 }
