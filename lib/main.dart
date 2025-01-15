@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
         title: 'Spotify',
         debugShowCheckedModeBanner: false,
         theme: AppTheme.darkTheme,
-        home: const HomePage(),
+        home: const SplashPage(),
       ),
     );
   }
