@@ -52,7 +52,7 @@ class ControlsWidget extends StatelessWidget {
                     shape: BoxShape.circle,
                     color: AppColors.primary,
                   ),
-                  child:player.playing? const Icon(Icons.pause,color: AppColors.darkGrey,size: 30,):
+                  child:player.playing? const Icon(Icons.pause,color: Colors.white,size: 30,):
                   const Icon(Icons.play_arrow,color: Colors.white,size: 40,),
                 ),
               ),

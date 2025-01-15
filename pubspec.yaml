@@ -30,6 +30,7 @@ dependencies:
   flutter_bloc: ^8.1.6
   bloc: ^8.1.4
   just_audio: ^0.9.43
+  shimmer: ^3.0.0
 
 
 dev_dependencies:

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:spotify/business/entities/song.dart';
 import 'package:spotify/common/helpers/is_dark_mode.dart';
 import 'package:spotify/presentation/song_player/pages/song_player.dart';
@@ -20,7 +21,43 @@ class PlaylistWidget extends StatelessWidget {
         builder: (context, state) {
 
           if(state.playlistStatus==Status.loading){
-            return const Center(child: CircularProgressIndicator());
+            return ListView.separated(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemBuilder: (context,index){
+
+                  return Shimmer.fromColors(
+                      baseColor: Colors.grey.shade700,
+                      highlightColor: Colors.grey.shade100,
+                      child:  Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(children: [
+                            Container(
+                              height: 50,width: 50,
+
+                              decoration: const BoxDecoration(
+                                shape: BoxShape.circle,
+                                color:  Colors.white38,
+                              ),
+                            ),
+                            const SizedBox(width: 10,),
+                            Column(crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                               Container(height: 10,color:  Colors.white38,width: 200,),
+                                const SizedBox(height: 5,),
+                               Container(height: 6,color:  Colors.white38,width: 100,),
+                              ],
+                            ),
+                          ],),
+                          const SizedBox(width: 50,)
+                        ],)
+                  );
+
+
+                },
+                separatorBuilder: (context,index)=> const SizedBox(height: 20,),
+                itemCount: 5);
           }
           else if(state.playlistStatus==Status.sucess){
             return Column(
