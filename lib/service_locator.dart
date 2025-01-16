@@ -2,8 +2,10 @@ import 'package:get_it/get_it.dart';
 import 'package:spotify/business/repository/auth/auth.dart';
 import 'package:spotify/business/repository/song/song.dart';
 import 'package:spotify/business/usecases/auth/signup_with_EmailPassword.dart';
+import 'package:spotify/business/usecases/song/add_or_remove_favourite.dart';
 import 'package:spotify/business/usecases/song/get_news_songs.dart';
 import 'package:spotify/business/usecases/song/get_playlist.dart';
+import 'package:spotify/business/usecases/song/is_favourite.dart';
 import 'package:spotify/data/repository/auth/auth.dart';
 import 'package:spotify/data/repository/song/song.dart';
 import 'package:spotify/data/sources/auth/auth_firebase_service.dart';
@@ -37,5 +39,9 @@ Future<void> initializeDependencies()async{
       GetNewsSongsUseCase());
   sL.registerSingleton<GetPlaylistUseCase>(
       GetPlaylistUseCase());
+  sL.registerSingleton<AddOrRemoveFavouriteUseCase>(
+    AddOrRemoveFavouriteUseCase());
+  sL.registerSingleton<IsFavouriteUseCase>(
+    IsFavouriteUseCase());
 
 }
