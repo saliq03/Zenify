@@ -1,9 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:spotify/business/usecases/user_preferences/set_login_key.dart';
 import 'package:spotify/data/models/creat_user_request.dart';
 import 'package:spotify/data/models/login_user_request.dart';
 
+import '../../../service_locator.dart';
 import '../../models/user_model.dart';
 
 abstract class AuthFirebaseService{
@@ -16,9 +18,10 @@ class AuthFirebaseServiceImpl extends AuthFirebaseService{
   Future<Either> SigninWithEmailPassword(LoginUserRequest user)async {
 
     try{
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
+    var data=  await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: user.email,
           password: user.password);
+     sL<SetLoginKeyUseCase>().call(params: true);
 
       return const Right("Signin was sucessful");
     }on FirebaseAuthException catch (e){

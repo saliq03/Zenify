@@ -31,6 +31,7 @@ dependencies:
   bloc: ^8.1.4
   just_audio: ^0.9.43
   shimmer: ^3.0.0
+  shared_preferences: ^2.3.5
 
 
 dev_dependencies:
