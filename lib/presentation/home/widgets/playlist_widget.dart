@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:spotify/business/entities/song.dart';
 import 'package:spotify/common/helpers/is_dark_mode.dart';
+import 'package:spotify/common/widgets/buttons/favourite.dart';
 import 'package:spotify/presentation/song_player/pages/song_player.dart';
 
 import '../../../core/configs/constants/status.dart';
@@ -115,7 +116,7 @@ class PlaylistWidget extends StatelessWidget {
               Row(children: [
                 Text(song.duration.toString().replaceAll('.', ':'),style: const TextStyle(fontWeight: FontWeight.w400,fontSize: 15),),
                 const SizedBox(width: 50,),
-                IconButton(onPressed: (){}, icon:   Icon(Icons.favorite_rounded,color: context.isDarkMode? const Color(0xff565656): const Color(0xffB4B4B4),size: 30,))
+                FavouriteButton(songEntity: song)
               ],)
              ],
           );

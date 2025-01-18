@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spotify/business/entities/song.dart';
+import 'package:spotify/common/widgets/buttons/favourite.dart';
 
 class SongDetailWidget extends StatelessWidget {
   const SongDetailWidget({super.key, required this.songEntity});
@@ -17,7 +18,7 @@ class SongDetailWidget extends StatelessWidget {
           ],
 
         ),
-        IconButton(onPressed: (){}, icon:Icon(Icons.favorite_outline_outlined,size: 30,) )
+      FavouriteButton(songEntity: songEntity)
       ],);
   }
 }
