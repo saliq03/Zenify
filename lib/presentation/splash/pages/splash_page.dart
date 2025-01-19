@@ -31,14 +31,12 @@ class _SplashPageState extends State<SplashPage> {
   void redirect() async{
 
     bool isLogin=await sL<IsLoginUseCase>().call();
-    print("\n\n\n");
-    print(isLogin);
     Future.delayed(const Duration(seconds: 3),(){
       if(isLogin){
         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>const HomePage()));
       }
       else{
-        print("here");
+
      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>const GetStartedPage()));
       }
       });

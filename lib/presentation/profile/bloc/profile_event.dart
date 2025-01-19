@@ -5,3 +5,4 @@ class ProfileEvent extends Equatable{
   List<Object?> get props => [];
 }
 class GetUser extends ProfileEvent{}
+class FetchFavouriteSongs extends ProfileEvent{}

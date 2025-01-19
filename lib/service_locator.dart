@@ -4,6 +4,7 @@ import 'package:spotify/business/repository/song/song.dart';
 import 'package:spotify/business/usecases/auth/get_current_user.dart';
 import 'package:spotify/business/usecases/auth/signup_with_EmailPassword.dart';
 import 'package:spotify/business/usecases/song/add_or_remove_favourite.dart';
+import 'package:spotify/business/usecases/song/get_favourite_songs.dart';
 import 'package:spotify/business/usecases/song/get_news_songs.dart';
 import 'package:spotify/business/usecases/song/get_playlist.dart';
 import 'package:spotify/business/usecases/song/is_favourite.dart';
@@ -54,5 +55,6 @@ Future<void> initializeDependencies()async{
   sL.registerSingleton<IsLoginUseCase>(IsLoginUseCase());
   sL.registerSingleton<ClearUserUseCase>(ClearUserUseCase());
   sL.registerSingleton<GetCurrentUserUseCase>(GetCurrentUserUseCase());
+  sL.registerSingleton<GetFavouritesSongsUseCase>(GetFavouritesSongsUseCase());
 
 }

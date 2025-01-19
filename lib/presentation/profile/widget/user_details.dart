@@ -65,7 +65,7 @@ class UserDetailsWidget extends StatelessWidget {
                 const SizedBox(height: 20,),
                 Text(state.email,style:  TextStyle(fontSize: 13,fontWeight: FontWeight.w400,color: context.isDarkMode? const Color(0xffD8D4D4): const Color(0xff222222)),),
                 const SizedBox(height: 5,),
-                Text(state.name,style: const TextStyle(fontSize: 20,fontWeight: FontWeight.w600),),
+                Text(capitalizeFirstLetter(state.name),style: const TextStyle(fontSize: 20,fontWeight: FontWeight.w600),),
               ],
             );
           }
@@ -73,5 +73,21 @@ class UserDetailsWidget extends StatelessWidget {
 
         },
       ),);
+  }
+
+  String capitalizeFirstLetter(String input){
+    List<String> words=input.split(' ');
+    List<String> capitalizedWords=[];
+   for(String word in words){
+     if(word.isEmpty){
+       capitalizedWords.add(word);
+     }
+     else{
+       String capitalizedWord=word[0].toUpperCase()+word.substring(1);
+       capitalizedWords.add(capitalizedWord);
+     }
+    
+   }
+   return capitalizedWords.join(' ');
   }
 }
