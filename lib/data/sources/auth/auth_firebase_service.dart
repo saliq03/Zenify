@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:spotify/business/usecases/user_preferences/set_login_key.dart';
+import 'package:spotify/core/configs/constants/app_urls.dart';
 import 'package:spotify/data/models/creat_user_request.dart';
 import 'package:spotify/data/models/login_user_request.dart';
 
@@ -11,6 +12,7 @@ import '../../models/user_model.dart';
 abstract class AuthFirebaseService{
   Future<Either> SigninWithEmailPassword(LoginUserRequest user);
   Future<Either> SignupWithEmailPassword(CreateUserRequest user);
+  Future<Either> getCurrentUser();
 }
 
 class AuthFirebaseServiceImpl extends AuthFirebaseService{
@@ -90,6 +92,24 @@ class AuthFirebaseServiceImpl extends AuthFirebaseService{
       return Left(message);
 
     }
+  }
+
+  @override
+  Future<Either> getCurrentUser() async{
+    try{
+      FirebaseAuth auth=FirebaseAuth.instance;
+      FirebaseFirestore firestore=FirebaseFirestore.instance;
+
+      var user=await firestore.collection("Users").doc(auth.currentUser?.email).get();
+      UserModel userModel=UserModel.fromJson(user.data()!);
+      userModel.imageUrl=auth.currentUser?.photoURL?? AppUrls.defaultImage;
+
+      return right(userModel.toUserEntity());
+    }catch(e){
+      return left("an error occurred\n $e");
+    }
+
+
   }
 
 }

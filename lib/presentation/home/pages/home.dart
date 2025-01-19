@@ -8,6 +8,7 @@ import 'package:spotify/presentation/home/widgets/artist_box.dart';
 import 'package:spotify/presentation/home/widgets/news_songs.dart';
 import 'package:spotify/presentation/home/widgets/playlist_widget.dart';
 import 'package:spotify/presentation/home/widgets/tabs.dart';
+import 'package:spotify/presentation/profile/pages/profile.dart';
 
 import '../../../common/widgets/appbar/basic_appbar.dart';
 import '../../../core/configs/assets/app_vectors.dart';
@@ -32,7 +33,10 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:  BasicAppbar(title: SvgPicture.asset(AppVectors.logo,height: 40,),hideback: true,),
+      appBar:  BasicAppbar(title: SvgPicture.asset(AppVectors.logo,height: 40,),hideBack: true,
+        action: IconButton(onPressed: (){
+          Navigator.push(context, MaterialPageRoute(builder: (_)=>ProfilePage()));
+        }, icon: const Icon(Icons.person,color: Colors.grey,size: 30,))),
 
       body:SingleChildScrollView(
        child:  Column(

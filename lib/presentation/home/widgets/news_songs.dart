@@ -97,7 +97,7 @@ class NewsSongsWiget extends StatelessWidget {
                           transform: Matrix4.translationValues(3,15,0),
                           decoration: BoxDecoration(
                               shape: BoxShape.circle,
-                              color: context.isDarkMode?AppColors.darkGrey:Colors.grey
+                              color: context.isDarkMode?AppColors.darkGrey:const Color(0xffE6E6E6)
                           ),
                           child: const Icon(Icons.play_arrow),
                         ),
@@ -105,8 +105,8 @@ class NewsSongsWiget extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 10,),
-                  Text(song.title,style: TextStyle(fontSize: 16,fontWeight: FontWeight.w600),),
-                  Text(song.artist,style: TextStyle(fontSize: 14,fontWeight: FontWeight.w400),)
+                  Text(song.title,style: const TextStyle(fontSize: 16,fontWeight: FontWeight.w600),),
+                  Text(song.artist,style: const TextStyle(fontSize: 14,fontWeight: FontWeight.w400),)
                 ],
               ),
             ),

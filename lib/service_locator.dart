@@ -1,6 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:spotify/business/repository/auth/auth.dart';
 import 'package:spotify/business/repository/song/song.dart';
+import 'package:spotify/business/usecases/auth/get_current_user.dart';
 import 'package:spotify/business/usecases/auth/signup_with_EmailPassword.dart';
 import 'package:spotify/business/usecases/song/add_or_remove_favourite.dart';
 import 'package:spotify/business/usecases/song/get_news_songs.dart';
@@ -52,5 +53,6 @@ Future<void> initializeDependencies()async{
   sL.registerSingleton<SetLoginKeyUseCase>(SetLoginKeyUseCase());
   sL.registerSingleton<IsLoginUseCase>(IsLoginUseCase());
   sL.registerSingleton<ClearUserUseCase>(ClearUserUseCase());
+  sL.registerSingleton<GetCurrentUserUseCase>(GetCurrentUserUseCase());
 
 }
