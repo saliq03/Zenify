@@ -7,9 +7,10 @@ import 'package:spotify/common/helpers/is_dark_mode.dart';
 import '../../../core/configs/theme/app_colors.dart';
 
 class FavouriteButton extends StatelessWidget {
-  const FavouriteButton({super.key, required this.songEntity});
+  const FavouriteButton({super.key,this.function, required this.songEntity});
 
   final SongEntity songEntity;
+  final Function? function;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +24,9 @@ class FavouriteButton extends StatelessWidget {
         builder: (context, state) {
           return IconButton(onPressed: () {
             context.read<FavouriteButtonBloc>().add(AddOrRemoveFavourite(id: songEntity.id));
-
+             if(function!=null){
+               function!();
+             }
           },
               icon: Icon(
                 state.isFavourite? Icons.favorite:Icons.favorite_outline_outlined,

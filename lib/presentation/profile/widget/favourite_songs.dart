@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:spotify/presentation/song_player/pages/song_player.dart';
 
 import '../../../common/widgets/buttons/favourite.dart';
 import '../../../core/configs/constants/status.dart';
@@ -18,6 +19,7 @@ class FavouriteSongsWiddget extends StatelessWidget {
 
           if(state.favouritesStatus==Status.loading){
             return ListView.separated(
+              shrinkWrap: true,
                 itemBuilder: (context,index){
                   return Shimmer.fromColors(
                       baseColor: Colors.grey.shade700,
@@ -54,10 +56,11 @@ class FavouriteSongsWiddget extends StatelessWidget {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text("FAVOURITE SONGS",style: TextStyle(fontSize: 15,fontWeight: FontWeight.w600),),
-              const SizedBox(height: 10,),
+              const Text("FAVOURITE SONGS",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w600),),
+              const SizedBox(height: 20,),
               ListView.separated(
                   shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
                   itemBuilder: (context,index){
                     var song=state.favourites[index];
                     return Row(
@@ -65,6 +68,8 @@ class FavouriteSongsWiddget extends StatelessWidget {
                       children: [
                         GestureDetector(
                           onTap: (){
+                            Navigator.push(context,
+                              MaterialPageRoute(builder: (_)=>SongPlayerPage(songEntity: song)));
                           },
                           child: Row(children: [
                             Container(
@@ -90,7 +95,11 @@ class FavouriteSongsWiddget extends StatelessWidget {
                         Row(children: [
                           Text(song.duration.toString().replaceAll('.', ':'),style: const TextStyle(fontWeight: FontWeight.w400,fontSize: 15),),
                           const SizedBox(width: 50,),
-                          FavouriteButton(songEntity: song)
+                          FavouriteButton(songEntity: song,
+                            function: (){
+                            context.read<ProfileBloc>().add(RemoveFavouriteSong(index: index));
+                          },
+                          key: UniqueKey(),)
                         ],)
                       ],
                     );

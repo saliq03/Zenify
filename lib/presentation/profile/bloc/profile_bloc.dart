@@ -17,6 +17,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   ProfileBloc(): super(const ProfileState()){
     on<GetUser>(_getUser);
     on<FetchFavouriteSongs>(_fetchFavouriteSongs);
+    on<RemoveFavouriteSong>(_removeFavouriteSong);
   }
 
   void _getUser(GetUser event, Emitter<ProfileState> emit)async{
@@ -35,8 +36,15 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     result.fold((l){
       emit(state.copyWith(favouritesStatus: Status.error));
     }, (r){
+
       emit(state.copyWith(favouritesStatus: Status.sucess,favourites: r));
     });
+  }
+  void _removeFavouriteSong(RemoveFavouriteSong event, Emitter<ProfileState> emit){
+    List<SongEntity> updatedFavourites = List.from(state.favourites);
+    updatedFavourites.removeAt(event.index);
+
+    emit(state.copyWith(favourites:updatedFavourites));
   }
 }
 

@@ -13,6 +13,7 @@ class ProfileState extends Equatable{
 });
 
  ProfileState copyWith({Status? status,String? name, String? email, String? image,List<SongEntity>? favourites, Status? favouritesStatus}){
+
    return ProfileState(
      status: status?? this.status,
      name: name?? this.name,

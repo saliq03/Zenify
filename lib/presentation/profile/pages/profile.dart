@@ -44,12 +44,14 @@ class _ProfilePageState extends State<ProfilePage> {
           appBar: BasicAppbar(title: const Text("Profile",
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),),
             color: context.isDarkMode ? AppColors.darkGrey : Colors.white,),
-          body: const Column(
-            children: [
-              UserDetailsWidget(),
-             SizedBox(height: 20),
-              FavouriteSongsWiddget()
-            ],
+          body: SingleChildScrollView(
+            child: const Column(
+              children: [
+                UserDetailsWidget(),
+               SizedBox(height: 20),
+                FavouriteSongsWiddget()
+              ],
+            ),
           ),
         ));
   }

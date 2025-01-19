@@ -6,3 +6,9 @@ class ProfileEvent extends Equatable{
 }
 class GetUser extends ProfileEvent{}
 class FetchFavouriteSongs extends ProfileEvent{}
+class RemoveFavouriteSong extends ProfileEvent{
+  final int index;
+  RemoveFavouriteSong({required this.index});
+  @override
+  List<Object?> get props => [index];
+}
