@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spotify/common/helpers/is_dark_mode.dart';
+import 'package:spotify/presentation/artist_profile/pages/artist_profile.dart';
 import 'package:spotify/presentation/bottom_nav/bloc/bottom_nav_bloc.dart';
 import 'package:spotify/presentation/home/pages/home.dart';
 import 'package:spotify/presentation/profile/pages/profile.dart';
@@ -16,7 +17,7 @@ class BottomNavPage extends StatefulWidget {
 class _BottomNavPageState extends State<BottomNavPage> {
   late BottomNavBloc _bloc;
    final PageController _pageController = PageController();
-  List<Widget> pages=[const HomePage(),Container(color: Colors.red,),Container(color: Colors.blueAccent,),const ProfilePage()];
+  List<Widget> pages=[const HomePage(),Container(color: Colors.red,),const ArtistProfilePage(),const ProfilePage()];
 
   
   @override
