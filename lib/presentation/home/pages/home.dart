@@ -33,10 +33,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:  BasicAppbar(title: SvgPicture.asset(AppVectors.logo,height: 40,),hideBack: true,
-        action: IconButton(onPressed: (){
-          Navigator.push(context, MaterialPageRoute(builder: (_)=>ProfilePage()));
-        }, icon: const Icon(Icons.person,color: Colors.grey,size: 30,))),
+      appBar:  BasicAppbar(title: SvgPicture.asset(AppVectors.logo,height: 40,),hideBack: true,),
 
       body:SingleChildScrollView(
        child:  Column(

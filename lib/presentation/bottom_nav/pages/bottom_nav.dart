@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spotify/common/helpers/is_dark_mode.dart';
+import 'package:spotify/presentation/bottom_nav/bloc/bottom_nav_bloc.dart';
 import 'package:spotify/presentation/home/pages/home.dart';
 import 'package:spotify/presentation/profile/pages/profile.dart';
 
@@ -12,57 +14,72 @@ class BottomNavPage extends StatefulWidget {
 }
 
 class _BottomNavPageState extends State<BottomNavPage> {
-   int currentIndex=0;
+  late BottomNavBloc _bloc;
    final PageController _pageController = PageController();
-  List<Widget> pages=[HomePage(),ProfilePage()];
+  List<Widget> pages=[const HomePage(),Container(color: Colors.red,),Container(color: Colors.blueAccent,),const ProfilePage()];
 
+  
+  @override
+  void initState() {
+    _bloc=BottomNavBloc();
+    super.initState();
+  }
   @override
   void dispose() {
     _pageController.dispose();
+    _bloc.close();
     super.dispose();
   }
   @override
   Widget build(BuildContext context) {
+    return BlocProvider(
+  create: (context) => _bloc,
+  child: BlocBuilder<BottomNavBloc, BottomNavState>(
+  builder: (context, state) {
     return Scaffold(
       body:PageView(
         controller: _pageController,
-        children: pages,
+        physics: const BouncingScrollPhysics(),
         onPageChanged: (index){
-          setState(() {
-            currentIndex=index;
-          });
+          context.read<BottomNavBloc>().add(ChangeIndex(index: index));
         },
+        children: pages,
       )
 
      ,
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: currentIndex,
-        backgroundColor: context.isDarkMode? const Color(0xff343434):const Color(0xffFFFFFF),
-        onTap: (index){
-          setState(() {
-            currentIndex=index;
-          });
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.only(top: 10),
+        child: BottomNavigationBar(
+          currentIndex: state.currentIndex,
+          backgroundColor: context.isDarkMode? const Color(0xff343434):const Color(0xffFFFFFF),
+          onTap: (index){
+            if (index != state.currentIndex) {
+              _pageController.jumpToPage(
+                index,);
+              context.read<BottomNavBloc>().add(ChangeIndex(index: index));
 
-          _pageController.animateToPage(
-            index,
-            duration: const Duration(milliseconds: 300),
-            curve: Curves.easeInOut,);
-
-        },
-
-
-          showSelectedLabels: true,
-          iconSize: 30,
-          selectedItemColor: Colors.green,
-          unselectedItemColor: context.isDarkMode?const Color(0xff737373):const Color(0xff808080),
-          items: [
-            BottomNavigationBarItem(
-                icon: Icon(currentIndex==0?Icons.pentagon_rounded:Icons.pentagon_outlined),
-            label: ''),
-            BottomNavigationBarItem(icon: Icon(currentIndex==1?Icons.person:CupertinoIcons.person),
-                label: '')
-          ],
+            }
+          },
+            showSelectedLabels: true,
+            iconSize: 30,
+            selectedItemColor: Colors.green,
+            unselectedItemColor: context.isDarkMode?const Color(0xff737373):const Color(0xff808080),
+            items: [
+              BottomNavigationBarItem(
+                  icon: Icon(state.currentIndex==0?Icons.pentagon_rounded:Icons.pentagon_outlined),
+              label: ''),
+              BottomNavigationBarItem(icon: Icon(state.currentIndex==1?CupertinoIcons.hexagon_fill:CupertinoIcons.hexagon),
+                  label: ''),
+              BottomNavigationBarItem(icon: Icon(state.currentIndex==2?Icons.favorite:Icons.favorite_outline_outlined),
+                  label: ''),
+              BottomNavigationBarItem(icon: Icon(state.currentIndex==3?Icons.person:CupertinoIcons.person),
+                  label: '')
+            ],
+        ),
       ),
     );
+  },
+),
+);
   }
 }

@@ -43,6 +43,7 @@ class _ProfilePageState extends State<ProfilePage> {
         child: Scaffold(
           appBar: BasicAppbar(title: const Text("Profile",
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),),
+            hideBack: true,
             color: context.isDarkMode ? AppColors.darkGrey : Colors.white,),
           body: SingleChildScrollView(
             child: const Column(
