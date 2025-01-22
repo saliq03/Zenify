@@ -57,7 +57,7 @@ class ArtistFirebaseServiceImpl extends ArtistFirebaseService{
 
   @override
   Future<Either> getArtist(String id) async{
-
+    print("data source");
     try{
 
       var artistCollection=firestore.collection("artists").doc(id);

@@ -6,6 +6,7 @@ import 'package:spotify/service_locator.dart';
 class GetArtistUseCase implements UseCase<Either,String>{
   @override
   Future<Either> call({String? params}) async{
+    print("usecase");
    return await sL<SongRepository>().getArtist(params!);
   }
 }

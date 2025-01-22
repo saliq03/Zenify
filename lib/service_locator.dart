@@ -63,7 +63,7 @@ Future<void> initializeDependencies()async{
   sL.registerSingleton<GetFavouritesSongsUseCase>(GetFavouritesSongsUseCase());
   sL.registerSingleton<SongsApiService>(SongsApiServicesImpl());
   sL.registerSingleton<SearchSongsUseCase>(SearchSongsUseCase());
-  sL.registerSingleton<ArtistFirebaseServiceImpl>(ArtistFirebaseServiceImpl());
+  sL.registerSingleton<ArtistFirebaseService>(ArtistFirebaseServiceImpl());
   sL.registerSingleton<FetchArtistsUseCase>(FetchArtistsUseCase());
   sL.registerSingleton<GetArtistUseCase>(GetArtistUseCase());
 }

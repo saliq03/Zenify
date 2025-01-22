@@ -44,6 +44,7 @@ class SongRepositoryImpl extends SongRepository{
 
   @override
   Future<Either> getArtist(String id) async{
+    print("data repo");
    return sL<ArtistFirebaseService>().getArtist(id);
   }
 
