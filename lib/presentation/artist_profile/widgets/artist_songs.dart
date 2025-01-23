@@ -1,13 +1,15 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:spotify/business/entities/song.dart';
 import 'package:spotify/common/helpers/is_dark_mode.dart';
 import 'package:spotify/common/widgets/shimmer/shimmer.dart';
-import 'package:spotify/data/models/artist_model.dart';
+
 import 'package:spotify/presentation/artist_profile/bloc/artist_profile_bloc.dart';
 
 import '../../../../core/configs/theme/app_colors.dart';
+import '../../../common/widgets/buttons/favourite.dart';
 import '../../../core/configs/constants/status.dart';
+import '../../song_player/pages/song_player.dart';
 
 class ArtistSongsWidget extends StatelessWidget {
   const ArtistSongsWidget({super.key});
@@ -77,14 +79,14 @@ class ArtistSongsWidget extends StatelessWidget {
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 itemBuilder: (context, index) {
-                  Tracks track=state.artist!.tracks[index];
+                  SongEntity track=state.artist!.allsongs[index];
                   return Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       GestureDetector(
                         onTap: () {
-                          // Navigator.push(context,
-                          //     MaterialPageRoute(builder: (context)=>SongPlayerPage(songEntity: song,)));
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context)=>SongPlayerPage(songEntity: track,)));
                         },
                         child: Row(children: [
                           Container(
@@ -102,10 +104,10 @@ class ArtistSongsWidget extends StatelessWidget {
                           const SizedBox(width: 10,),
                           Column(crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text("Don't Smile At Me", style: const TextStyle(
+                              Text(track.title, style: const TextStyle(
                                   fontWeight: FontWeight.w600, fontSize: 16),),
                               const SizedBox(height: 5,),
-                              Text("Billie Eilesh", style: const TextStyle(
+                              Text(state.artist!.name, style: const TextStyle(
                                   fontSize: 14, fontWeight: FontWeight.w400),),
                             ],
                           ),
@@ -113,19 +115,18 @@ class ArtistSongsWidget extends StatelessWidget {
                       ),
 
                       Row(children: [
-                        Text(5.33.toString().replaceAll('.', ':'),
+                        Text(track.duration.toString().replaceAll('.', ':'),
                           style: const TextStyle(
                               fontWeight: FontWeight.w400, fontSize: 15),),
                         const SizedBox(width: 50,),
-                        Icon(Icons.favorite)
-                        // FavouriteButton(songEntity: song)
+                        FavouriteButton(songEntity: track)
                       ],)
                     ],
                   );
                 },
                 separatorBuilder: (context, index) =>
                 const SizedBox(height: 20,),
-                itemCount: state.artist!.tracks.length)
+                itemCount: state.artist!.allsongs.length)
           ],
         );
       }

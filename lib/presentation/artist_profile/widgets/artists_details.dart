@@ -65,7 +65,7 @@ class ArtistsDetailsWidget extends StatelessWidget {
           const SizedBox(height: 12,),
           Text(state.artist!.name,style: const TextStyle(fontSize: 20,fontWeight: FontWeight.w600),),
           const SizedBox(height: 5,),
-          Text("${state.artist!.albums.length} Album, ${state.artist!.tracks.length} Track",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w400,
+          Text("${state.artist!.albums.length} Album, ${state.artist!.allsongs.length} Track",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w400,
               color: context.isDarkMode?const Color(0xffD3D3D3): const Color(0xff393939)),),
           const SizedBox(height: 10,),
           SizedBox(

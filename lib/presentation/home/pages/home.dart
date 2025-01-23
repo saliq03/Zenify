@@ -5,6 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:spotify/presentation/home/bloc/home_bloc.dart';
 
 import 'package:spotify/presentation/home/widgets/artist_box.dart';
+import 'package:spotify/presentation/home/widgets/artists.dart';
 import 'package:spotify/presentation/home/widgets/news_songs.dart';
 import 'package:spotify/presentation/home/widgets/playlist_widget.dart';
 import 'package:spotify/presentation/home/widgets/tabs.dart';
@@ -28,6 +29,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
     tabController=TabController(length: 4, vsync: this);
     context.read<HomeBloc>().add(FetchNewsSongs());
     context.read<HomeBloc>().add(GetPlaylist());
+    context.read<HomeBloc>().add(FetchArtists());
     super.initState();
   }
   @override
@@ -49,7 +51,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                 children: [
                  const NewsSongsWiget(),
                   Container(),
-                  Container(),
+                  ArtistsWidget(),
                   Container(),
             
                 ]),

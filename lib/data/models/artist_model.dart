@@ -1,3 +1,4 @@
+import 'package:spotify/business/entities/song.dart';
 import 'package:spotify/data/models/music_data.dart';
 
 class ArtistModel{
@@ -5,18 +6,18 @@ class ArtistModel{
   final String name;
   final String image;
   final String bio;
-  final List<Tracks> tracks;
+  final List<SongEntity> allsongs;
   final List<Albums> albums;
 
-  ArtistModel({required this.id, required this.name, required this.image, required this.bio, required this.tracks, required this.albums});
+  ArtistModel({required this.id, required this.name, required this.image, required this.bio, required this.allsongs, required this.albums});
 
-factory ArtistModel.fromJson(Map<String,dynamic> json,List<Tracks> tracks,List<Albums> albums){
+factory ArtistModel.fromJson(Map<String,dynamic> json,List<SongEntity> allSongs,List<Albums> albums){
   return ArtistModel(
       id: json['id'],
       name: json['name'],
       image: json['image'],
       bio: json['bio'],
-      tracks: tracks,
+      allsongs: allSongs,
       albums: albums);
 }
 

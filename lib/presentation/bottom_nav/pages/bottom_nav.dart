@@ -7,6 +7,7 @@ import 'package:spotify/presentation/artist_profile/pages/artist_profile.dart';
 import 'package:spotify/presentation/bottom_nav/bloc/bottom_nav_bloc.dart';
 import 'package:spotify/presentation/home/pages/home.dart';
 import 'package:spotify/presentation/profile/pages/profile.dart';
+import 'package:spotify/presentation/search/pages/search.dart';
 
 class BottomNavPage extends StatefulWidget {
   const BottomNavPage({super.key});
@@ -19,7 +20,7 @@ class _BottomNavPageState extends State<BottomNavPage> {
 
   late BottomNavBloc _bloc;
    final PageController _pageController = PageController();
-  List<Widget> pages=[const HomePage(),Container(color: Colors.red,),const ArtistProfilePage(),const ProfilePage()];
+  List<Widget> pages=[const HomePage(),const SearchPage(),const ProfilePage()];
 
   
   @override
@@ -72,11 +73,9 @@ class _BottomNavPageState extends State<BottomNavPage> {
               BottomNavigationBarItem(
                   icon: Icon(state.currentIndex==0?Icons.pentagon_rounded:Icons.pentagon_outlined),
               label: ''),
-              BottomNavigationBarItem(icon: Icon(state.currentIndex==1?CupertinoIcons.hexagon_fill:CupertinoIcons.hexagon),
+              BottomNavigationBarItem(icon: Icon(state.currentIndex==1?Icons.search:Icons.search_outlined),
                   label: ''),
-              BottomNavigationBarItem(icon: Icon(state.currentIndex==2?Icons.favorite:Icons.favorite_outline_outlined),
-                  label: ''),
-              BottomNavigationBarItem(icon: Icon(state.currentIndex==3?Icons.person:CupertinoIcons.person),
+              BottomNavigationBarItem(icon: Icon(state.currentIndex==2?Icons.person:CupertinoIcons.person),
                   label: '')
             ],
         ),

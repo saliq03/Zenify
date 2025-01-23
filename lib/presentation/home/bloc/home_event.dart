@@ -7,3 +7,4 @@ part of 'home_bloc.dart';
 
  class FetchNewsSongs extends HomeEvent{}
  class GetPlaylist extends HomeEvent{}
+ class FetchArtists extends HomeEvent{}
