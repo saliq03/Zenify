@@ -1,7 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:spotify/business/repository/song/song.dart';
 import 'package:spotify/data/sources/artist/artist_firebase_service.dart';
-import 'package:spotify/data/sources/songs/songs_api_service.dart';
 import 'package:spotify/data/sources/songs/songs_firebase_service.dart';
 
 import '../../../service_locator.dart';
@@ -32,10 +31,7 @@ class SongRepositoryImpl extends SongRepository{
     return await sL<SongsFirebaseService>().getFavouriteSongs();
   }
 
-  @override
-  Future<Either> searchSongs(String query) async{
-    return await sL<SongsApiService>().searchSongs(query);
-  }
+
 
   @override
   Future<Either> fetchArtists() async{
@@ -46,6 +42,11 @@ class SongRepositoryImpl extends SongRepository{
   Future<Either> getArtist(String id) async{
     print("data repo");
    return sL<ArtistFirebaseService>().getArtist(id);
+  }
+
+  @override
+  Future<Either> searchSongs(String query)async {
+    return await sL<SongsFirebaseService>().searchSongsAndArtists(query);
   }
 
 }

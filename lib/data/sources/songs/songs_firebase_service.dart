@@ -6,12 +6,15 @@ import 'package:spotify/business/usecases/song/is_favourite.dart';
 import 'package:spotify/data/models/song.dart';
 import 'package:spotify/service_locator.dart';
 
+import '../../models/artist_model.dart';
+
 abstract class SongsFirebaseService{
   Future<Either> getNewsSongs();
   Future<Either> getPlaylist();
   Future<Either>addOrRemoveFavourite(String id);
   Future<bool>isFavourite(String id);
   Future<Either> getFavouriteSongs();
+  Future<Either> searchSongsAndArtists(String searchText);
   
 
 }
@@ -147,5 +150,89 @@ class SongsFirebaseServiceImpl extends SongsFirebaseService{
       return left("An error occurred");
     }
   }
+
+
+
+
+  @override
+  Future<Either> searchSongsAndArtists(String searchText) async {
+    List<SongEntity> songs = [];
+    List<ArtistModel> artists = [];
+
+    try {
+      if (searchText.isEmpty) {
+        // Fetch random songs
+        final randomSongs = await FirebaseFirestore.instance
+            .collection("Songs")
+            // .orderBy("releaseDate", descending: true)
+            .limit(4)
+            .get();
+
+        final randomArtists = await FirebaseFirestore.instance
+            .collection("artists")
+            .limit(4)
+            .get();
+
+        // Add the random songs and artists to the lists
+        for (var songElement in randomSongs.docs) {
+          var songData = songElement.data();
+          SongModel songModel = SongModel.fromJson(songData);
+          songModel.id = songElement.reference.id;
+          songs.add(songModel.toEntity());
+        }
+
+        for (var artistElement in randomArtists.docs) {
+          var artistData = artistElement.data();
+          ArtistModel artistModel = ArtistModel.fromJson(artistData, [], []);
+          artists.add(artistModel);
+        }
+
+        return Right({'songs': songs, 'artists': artists});
+      }
+
+      // Fetch songs based on search text
+      final songsSnapshot = await FirebaseFirestore.instance
+          .collection("Songs")
+          .get();
+
+      songs.clear();
+      for (var element in songsSnapshot.docs) {
+        var songData = element.data();
+
+        if (songData['title'].toString().toLowerCase().contains(searchText.toLowerCase()) ||
+            songData['artist'].toString().toLowerCase().contains(searchText.toLowerCase())) {
+          SongModel songModel = SongModel.fromJson(songData);
+          songModel.id = element.reference.id;
+
+          // Check if the song is a favorite
+          bool isFavourite = await sL<IsFavouriteUseCase>().call(params: element.reference.id);
+          songModel.isFavourite = isFavourite;
+
+          songs.add(songModel.toEntity());
+        }
+      }
+
+      // Fetch artists based on search text
+      final artistsSnapshot = await FirebaseFirestore.instance
+          .collection("artists")
+          .get();
+
+      artists.clear();
+      for (var element in artistsSnapshot.docs) {
+        var artistData = element.data();
+
+        if (artistData['name'].toString().toLowerCase().contains(searchText.toLowerCase())) {
+          ArtistModel artistModel = ArtistModel.fromJson(artistData, [], []);
+          artists.add(artistModel);
+        }
+      }
+
+      return Right({'songs': songs, 'artists': artists});
+    } catch (e) {
+      print (e.toString());
+      return const Left('An error occurred while fetching data.');
+    }
+  }
+
 
 }

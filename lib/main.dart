@@ -5,6 +5,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:spotify/core/configs/theme/app_theme.dart';
 import 'package:spotify/presentation/home/bloc/home_bloc.dart';
 import 'package:spotify/presentation/home/pages/home.dart';
+import 'package:spotify/presentation/search/bloc/search_bloc.dart';
 import 'package:spotify/presentation/splash/pages/splash_page.dart';
 import 'package:spotify/service_locator.dart';
 
@@ -26,8 +27,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => HomeBloc(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (_) => HomeBloc(),
+        ),
+        BlocProvider(
+          create: (context) => SearchBloc(),
+        ),
+      ],
       child: MaterialApp(
         title: 'Spotify',
         debugShowCheckedModeBanner: false,

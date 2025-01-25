@@ -1,5 +1,4 @@
 import 'package:spotify/business/entities/song.dart';
-import 'package:spotify/data/models/music_data.dart';
 
 class ArtistModel{
   final String id;
