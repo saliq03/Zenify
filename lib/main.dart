@@ -5,6 +5,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:spotify/core/configs/theme/app_theme.dart';
 import 'package:spotify/presentation/home/bloc/home_bloc.dart';
 import 'package:spotify/presentation/home/pages/home.dart';
+import 'package:spotify/presentation/profile/bloc/profile_bloc.dart';
 import 'package:spotify/presentation/search/bloc/search_bloc.dart';
 import 'package:spotify/presentation/splash/pages/splash_page.dart';
 import 'package:spotify/service_locator.dart';
@@ -35,11 +36,14 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) => SearchBloc(),
         ),
+        BlocProvider(
+          create: (context) => ProfileBloc(),
+        ),
       ],
       child: MaterialApp(
         title: 'Spotify',
         debugShowCheckedModeBanner: false,
-        theme: AppTheme.darkTheme,
+        theme: AppTheme.lightTheme,
         home: const SplashPage(),
       ),
     );

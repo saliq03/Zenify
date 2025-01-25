@@ -18,7 +18,7 @@ part of 'search_bloc.dart';
    }
 
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [status,songs,artists];
 
  }
 

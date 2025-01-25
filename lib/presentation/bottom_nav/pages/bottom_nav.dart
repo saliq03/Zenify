@@ -69,14 +69,16 @@ class _BottomNavPageState extends State<BottomNavPage> {
             iconSize: 30,
             selectedItemColor: Colors.green,
             unselectedItemColor: context.isDarkMode?const Color(0xff737373):const Color(0xff808080),
+            unselectedFontSize: 14,
+            selectedFontSize: 15,
             items: [
               BottomNavigationBarItem(
-                  icon: Icon(state.currentIndex==0?Icons.pentagon_rounded:Icons.pentagon_outlined),
-              label: ''),
+                  icon: Icon(state.currentIndex==0?Icons.home:Icons.home_outlined),
+              label: 'Home'),
               BottomNavigationBarItem(icon: Icon(state.currentIndex==1?Icons.search:Icons.search_outlined),
-                  label: ''),
+                  label: 'Search'),
               BottomNavigationBarItem(icon: Icon(state.currentIndex==2?Icons.person:CupertinoIcons.person),
-                  label: '')
+                  label: 'Profile')
             ],
         ),
       ),

@@ -17,9 +17,11 @@ class ArtistWiget extends StatelessWidget {
             child: Row(
               children: [
                 Container(width: 50,height: 50,
-                  decoration: const BoxDecoration(
-                      color: Colors.white38,
-                      shape: BoxShape.circle
+                  decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                    image: DecorationImage(
+                      fit: BoxFit.cover,
+                        image:NetworkImage(artist.image) )
                   ),),
                 const SizedBox(width: 10,),
                 Column(crossAxisAlignment: CrossAxisAlignment.start,

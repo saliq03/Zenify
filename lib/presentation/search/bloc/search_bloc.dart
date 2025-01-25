@@ -21,7 +21,9 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
             emit(state.copyWith(status: Status.error));
           },
           (r){
-            emit(state.copyWith(status: Status.sucess,songs: r['songs'],artists: r['artists']));
+            List<SongEntity> songs = List.from(r['songs']);
+            List<ArtistModel> artists=List.from(r['artists']);
+            emit(state.copyWith(status: Status.sucess,songs: songs,artists: artists));
           });
    }
 }

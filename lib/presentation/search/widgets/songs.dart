@@ -18,8 +18,10 @@ class SongsWidget extends StatelessWidget {
             child: Row(
               children: [
                 Container(width: 50,height: 50,
-                  decoration: const BoxDecoration(
-                    color: Colors.white38,
+                  decoration:  BoxDecoration(
+                      image: DecorationImage(
+                          fit: BoxFit.cover,
+                          image:NetworkImage(song.image) )
                   ),),
                 const SizedBox(width: 10,),
                 Column(crossAxisAlignment: CrossAxisAlignment.start,

@@ -158,9 +158,11 @@ class SongsFirebaseServiceImpl extends SongsFirebaseService{
   Future<Either> searchSongsAndArtists(String searchText) async {
     List<SongEntity> songs = [];
     List<ArtistModel> artists = [];
+    print("method called");
 
     try {
       if (searchText.isEmpty) {
+
         // Fetch random songs
         final randomSongs = await FirebaseFirestore.instance
             .collection("Songs")
@@ -178,8 +180,11 @@ class SongsFirebaseServiceImpl extends SongsFirebaseService{
           var songData = songElement.data();
           SongModel songModel = SongModel.fromJson(songData);
           songModel.id = songElement.reference.id;
+          bool isFavourite = await sL<IsFavouriteUseCase>().call(params: songModel.id);
+          songModel.isFavourite = isFavourite;
           songs.add(songModel.toEntity());
         }
+
 
         for (var artistElement in randomArtists.docs) {
           var artistData = artistElement.data();

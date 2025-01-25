@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:spotify/common/widgets/buttons/favourite.dart';
 import 'package:spotify/presentation/search/bloc/search_bloc.dart';
 import 'package:spotify/presentation/search/widgets/artist.dart';
 import 'package:spotify/presentation/search/widgets/search.dart';
+import 'package:spotify/presentation/search/widgets/shimmer_search.dart';
 import 'package:spotify/presentation/search/widgets/songs.dart';
 
 import '../../../core/configs/constants/status.dart';
@@ -19,6 +19,7 @@ class _SearchPageState extends State<SearchPage> {
   @override
   void initState() {
     super.initState();
+    print("init");
     context.read<SearchBloc>().add(OnSearchChange(searchText: ''));
   }
 
@@ -33,10 +34,10 @@ class _SearchPageState extends State<SearchPage> {
             BlocBuilder<SearchBloc, SearchState>(
               builder: (context, state) {
                 if(state.status==Status.loading){
-                  return CircularProgressIndicator();
+                  return const ShimmerSearchWidget();
                 }
                 else if(state.status==Status.error){
-                  return Text(" Something went wrong");
+                  return const Text(" Something went wrong");
                 }
                 else{
                   return ListView(
