@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:spotify/business/usecases/auth/signup_with_EmailPassword.dart';
 import 'package:spotify/common/helpers/is_dark_mode.dart';
@@ -6,22 +8,41 @@ import 'package:spotify/common/widgets/appbar/basic_appbar.dart';
 import 'package:spotify/common/widgets/buttons/basic_app_button.dart';
 import 'package:spotify/core/configs/assets/app_vectors.dart';
 import 'package:spotify/data/models/creat_user_request.dart';
+import 'package:spotify/presentation/signup_or_signin/bloc/auth_bloc.dart';
 import 'package:spotify/presentation/signup_or_signin/pages/signin_page.dart';
 import 'package:spotify/service_locator.dart';
 
-import '../../home/pages/home.dart';
+import '../../bottom_nav/pages/bottom_nav.dart';
 
-class SignupPage extends StatelessWidget {
+class SignupPage extends StatefulWidget {
    SignupPage({super.key});
 
+  @override
+  State<SignupPage> createState() => _SignupPageState();
+}
+
+class _SignupPageState extends State<SignupPage> {
+  
    final nameController=TextEditingController();
    final emailController=TextEditingController();
    final passwordController=TextEditingController();
-
-
+   late AuthBloc _bloc;
+   @override
+  void initState() {
+    _bloc=AuthBloc();
+    super.initState();
+  }
+  
+  @override
+  void dispose() {
+    _bloc.close();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return BlocProvider(
+  create: (_) => _bloc,
+  child: Scaffold(
      appBar: BasicAppbar(
        title:SvgPicture.asset(AppVectors.logo,height: 35,) ,),
       body: Center(
@@ -51,14 +72,24 @@ class SignupPage extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 16,),
-                TextFormField(
+                BlocBuilder<AuthBloc, AuthState>(
+                     builder: (context, state) {
+                      return TextFormField(
                   controller: passwordController,
-                  decoration: const InputDecoration(
+                  obscureText: state.showPasswordSignUp,
+                  decoration: InputDecoration(
+                      suffixIcon: IconButton(onPressed: (){
+                        context.read<AuthBloc>().add(ShowPasswordSignUp());
+                      }, icon:  Icon(state.showPasswordSignUp? CupertinoIcons.eye_slash:CupertinoIcons.eye),padding: const EdgeInsets.only(right: 10),),
+
+
                       hintText: "Enter Password"
                   ).applyDefaults(
                       Theme.of(context).inputDecorationTheme
                   ),
-                ),
+                );
+  },
+),
                 const SizedBox(height: 33,),
                 BasicAppButton(title: "Create Account", onPress: () async {
                   var result= await sL<SignupWithEmailPasswordUseCase>().call(
@@ -75,8 +106,9 @@ class SignupPage extends StatelessWidget {
                           (r){
                             Navigator.pushAndRemoveUntil(
                                 context,
-                                MaterialPageRoute(builder: (context)=>HomePage()),
+                                MaterialPageRoute(builder: (context) => const BottomNavPage()),
                                     (Route<dynamic> route) => false);
+
 
 
                       });
@@ -113,6 +145,7 @@ class SignupPage extends StatelessWidget {
           ),
         ),
       ),
-    );
+    ),
+);
   }
 }

@@ -12,3 +12,9 @@ class RemoveFavouriteSong extends ProfileEvent{
   @override
   List<Object?> get props => [index];
 }
+class LogoutUser extends ProfileEvent{
+  final BuildContext context;
+  LogoutUser({required this.context});
+  @override
+  List<Object?> get props => [context];
+}

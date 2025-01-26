@@ -7,6 +7,7 @@ import 'package:spotify/presentation/profile/bloc/profile_bloc.dart';
 import 'package:spotify/presentation/profile/widget/favourite_songs.dart';
 import 'package:spotify/presentation/profile/widget/user_details.dart';
 
+
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
 
@@ -33,6 +34,7 @@ class _ProfilePageState extends State<ProfilePage> {
       appBar: BasicAppbar(title: const Text("Profile",
         style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),),
         hideBack: true,
+        action: popUpMenuWidget(),
         color: context.isDarkMode ? AppColors.darkGrey : Colors.white,),
       body: const SingleChildScrollView(
         child: Column(
@@ -43,6 +45,25 @@ class _ProfilePageState extends State<ProfilePage> {
           ],
         ),
       ),
+    );
+  }
+
+  Widget popUpMenuWidget(){
+    return PopupMenuButton(
+        icon: const Icon(Icons.more_vert_rounded),
+        onSelected: (value){
+          if(value=='logout'){
+            context.read<ProfileBloc>().add(LogoutUser(context: context));
+          }
+        },
+        itemBuilder:  (context)=>[
+          const PopupMenuItem(
+            value: 'logout',
+            child: ListTile(
+              leading: Icon(Icons.logout),
+              title: Text('Log out'),
+            ),
+          ),]
     );
   }
 }

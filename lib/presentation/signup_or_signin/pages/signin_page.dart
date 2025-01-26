@@ -1,23 +1,46 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:spotify/business/usecases/auth/signin_with_email.dart';
 import 'package:spotify/common/helpers/is_dark_mode.dart';
 import 'package:spotify/data/models/login_user_request.dart';
-import 'package:spotify/presentation/home/pages/home.dart';
+import 'package:spotify/presentation/signup_or_signin/bloc/auth_bloc.dart';
 import 'package:spotify/presentation/signup_or_signin/pages/signup_page.dart';
 
 import '../../../common/widgets/appbar/basic_appbar.dart';
 import '../../../common/widgets/buttons/basic_app_button.dart';
 import '../../../core/configs/assets/app_vectors.dart';
 import '../../../service_locator.dart';
+import '../../bottom_nav/pages/bottom_nav.dart';
 
-class SignInPage extends StatelessWidget {
+class SignInPage extends StatefulWidget {
   SignInPage({super.key});
+
+  @override
+  State<SignInPage> createState() => _SignInPageState();
+}
+
+class _SignInPageState extends State<SignInPage> {
  final emailController=TextEditingController();
+
  final passwordController=TextEditingController();
+ late AuthBloc _bloc;
+ @override
+  void initState() {
+   _bloc=AuthBloc();
+    super.initState();
+  }
+  @override
+  void dispose() {
+    _bloc.close();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return BlocProvider(
+  create: (_) => _bloc,
+  child: Scaffold(
       appBar: BasicAppbar(
         title:SvgPicture.asset(AppVectors.logo,height: 35,) ,),
       body: Center(
@@ -32,6 +55,7 @@ class SignInPage extends StatelessWidget {
 
                 TextFormField(
                   controller: emailController,
+
                   decoration: const InputDecoration(
                       hintText: "Enter Username Or Email"
                   ).applyDefaults(
@@ -39,14 +63,24 @@ class SignInPage extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 16,),
-                TextFormField(
+                BlocBuilder<AuthBloc, AuthState>(
+                  buildWhen: (previous, current) => previous.showPasswordSignIn!=current.showPasswordSignIn,
+             builder: (context, state) {
+               return TextFormField(
                   controller: passwordController,
-                  decoration: const InputDecoration(
+                  obscureText: state.showPasswordSignIn, 
+                  
+                  decoration: InputDecoration(
+                    suffixIcon: IconButton(onPressed: (){
+                      context.read<AuthBloc>().add(ShowPasswordSignIn());
+                    }, icon:  Icon(state.showPasswordSignIn? CupertinoIcons.eye_slash:CupertinoIcons.eye),padding: const EdgeInsets.only(right: 10),),
                       hintText: "Enter Password"
                   ).applyDefaults(
                       Theme.of(context).inputDecorationTheme
                   ),
-                ),
+                );
+  },
+),
                 const SizedBox(height: 10),
                 Row(mainAxisAlignment: MainAxisAlignment.start,
                   children: [
@@ -71,9 +105,10 @@ class SignInPage extends StatelessWidget {
 
                           },
                           (r){
+
                             Navigator.pushAndRemoveUntil(
                                 context,
-                                MaterialPageRoute(builder: (context) => HomePage()),
+                                MaterialPageRoute(builder: (context) => const BottomNavPage()),
                                     (Route<dynamic> route) => false);
 
                       });
@@ -110,6 +145,7 @@ class SignInPage extends StatelessWidget {
           ),
         ),
       ),
-    );
+    ),
+);
   }
 }

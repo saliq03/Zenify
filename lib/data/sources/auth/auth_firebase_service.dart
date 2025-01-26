@@ -13,6 +13,7 @@ abstract class AuthFirebaseService{
   Future<Either> SigninWithEmailPassword(LoginUserRequest user);
   Future<Either> SignupWithEmailPassword(CreateUserRequest user);
   Future<Either> getCurrentUser();
+  Future<Either> logoutUser();
 }
 
 class AuthFirebaseServiceImpl extends AuthFirebaseService{
@@ -110,6 +111,16 @@ class AuthFirebaseServiceImpl extends AuthFirebaseService{
     }
 
 
+  }
+
+  @override
+  Future<Either> logoutUser() async {
+    try {
+      await FirebaseAuth.instance.signOut();
+     return const Right("Logout successful");
+    } catch (e) {
+      return const Left("An error occured");
+    }
   }
 
 }

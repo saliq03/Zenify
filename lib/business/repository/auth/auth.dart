@@ -6,5 +6,6 @@ abstract class AuthRepository{
   Future<Either> SigninWithEmailPassword(LoginUserRequest loginUserReq);
   Future<Either> SignupWithEmailPassword(CreateUserRequest createUserReq);
   Future<Either> getCurrentUser();
+  Future<Either> logoutUser();
 
 }

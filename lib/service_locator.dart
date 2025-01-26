@@ -2,6 +2,7 @@ import 'package:get_it/get_it.dart';
 import 'package:spotify/business/repository/auth/auth.dart';
 import 'package:spotify/business/repository/song/song.dart';
 import 'package:spotify/business/usecases/auth/get_current_user.dart';
+import 'package:spotify/business/usecases/auth/logout_user.dart';
 import 'package:spotify/business/usecases/auth/signup_with_EmailPassword.dart';
 import 'package:spotify/business/usecases/song/add_or_remove_favourite.dart';
 import 'package:spotify/business/usecases/song/fetch_artists.dart';
@@ -66,4 +67,5 @@ Future<void> initializeDependencies()async{
   sL.registerSingleton<FetchArtistsUseCase>(FetchArtistsUseCase());
   sL.registerSingleton<GetArtistUseCase>(GetArtistUseCase());
   sL.registerSingleton<SearchUseCase>(SearchUseCase());
+  sL.registerSingleton<LogoutUserUseCase>(LogoutUserUseCase());
 }
