@@ -45,10 +45,15 @@ class SignupOrSigninPage extends StatelessWidget {
                       Expanded(
                         flex:1,
                           child: BasicAppButton(title: "Register", onPress: (){
-                            Navigator.push(context, MaterialPageRoute(builder: (context)=>SignupPage()));
+                            Navigator.pushAndRemoveUntil(context,
+                                MaterialPageRoute(builder: (_)=>SignupPage()),
+                                    (Route<dynamic> route) => false);
+
                           }, height: 70,)),
                       const SizedBox(width: 30,),TextButton(onPressed: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>SignInPage()));
+                        Navigator.pushAndRemoveUntil(context,
+                            MaterialPageRoute(builder: (_)=>SignInPage()),
+                                (Route<dynamic> route) => false);
                       }, child: Text("Sign in",style: TextStyle(fontSize: 19,fontWeight: FontWeight.w500,color: context.isDarkMode? Colors.white:Colors.black),))
                     ],
                   )

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:spotify/core/configs/theme/app_theme.dart';
+import 'package:spotify/presentation/choose_mode/bloc/theme_bloc.dart';
 import 'package:spotify/presentation/home/bloc/home_bloc.dart';
 import 'package:spotify/presentation/home/pages/home.dart';
 import 'package:spotify/presentation/profile/bloc/profile_bloc.dart';
@@ -34,17 +35,25 @@ class MyApp extends StatelessWidget {
           create: (_) => HomeBloc(),
         ),
         BlocProvider(
+            create: (_) =>
+            ThemeBloc()
+              ..add(LoadTheme())),
+        BlocProvider(
           create: (context) => SearchBloc(),
         ),
         BlocProvider(
           create: (context) => ProfileBloc(),
         ),
       ],
-      child: MaterialApp(
-        title: 'Spotify',
-        debugShowCheckedModeBanner: false,
-        theme: AppTheme.darkTheme,
-        home: const SplashPage(),
+      child: BlocBuilder<ThemeBloc, ThemeState>(
+        builder: (context, state) {
+          return MaterialApp(
+            title: 'Spotify',
+            debugShowCheckedModeBanner: false,
+            theme: state.appTheme,
+            home: const SplashPage(),
+          );
+        },
       ),
     );
   }

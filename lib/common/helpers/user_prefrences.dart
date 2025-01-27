@@ -30,6 +30,21 @@ class UserPreferences {
     return email;
   }
 
+  setTheme(bool value) async {
+    SharedPreferences sharedPreferences=await SharedPreferences.getInstance();
+    sharedPreferences.setBool('isDarkMode', value);
+  }
+  Future<bool> isDarkMode() async {
+    SharedPreferences sharedPreferences=await SharedPreferences.getInstance();
+    bool? isDarkMode= sharedPreferences.getBool('isDarkMode');
+    if(isDarkMode==false) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+
   Future<bool> removeUser() async {
     SharedPreferences sp=await SharedPreferences.getInstance();
     sp.clear();

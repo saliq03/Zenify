@@ -14,7 +14,9 @@ import 'package:spotify/business/usecases/song/is_favourite.dart';
 import 'package:spotify/business/usecases/song/search.dart';
 
 import 'package:spotify/business/usecases/user_preferences/clear_user.dart';
+import 'package:spotify/business/usecases/user_preferences/is_darkmode.dart';
 import 'package:spotify/business/usecases/user_preferences/is_login.dart';
+import 'package:spotify/business/usecases/user_preferences/set_theme.dart';
 import 'package:spotify/common/helpers/user_prefrences.dart';
 import 'package:spotify/data/repository/auth/auth.dart';
 import 'package:spotify/data/repository/song/song.dart';
@@ -68,4 +70,6 @@ Future<void> initializeDependencies()async{
   sL.registerSingleton<GetArtistUseCase>(GetArtistUseCase());
   sL.registerSingleton<SearchUseCase>(SearchUseCase());
   sL.registerSingleton<LogoutUserUseCase>(LogoutUserUseCase());
+  sL.registerSingleton<SetThemeUseCase>(SetThemeUseCase());
+  sL.registerSingleton<IsDarkModeUseCase>(IsDarkModeUseCase());
 }

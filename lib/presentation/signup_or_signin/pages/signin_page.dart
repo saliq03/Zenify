@@ -42,7 +42,7 @@ class _SignInPageState extends State<SignInPage> {
   create: (_) => _bloc,
   child: Scaffold(
       appBar: BasicAppbar(
-        title:SvgPicture.asset(AppVectors.logo,height: 35,) ,),
+        title:SvgPicture.asset(AppVectors.logo,height: 35,),hideBack: true,),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 30,vertical: 10),
