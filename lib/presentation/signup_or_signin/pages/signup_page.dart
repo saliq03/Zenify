@@ -91,28 +91,17 @@ class _SignupPageState extends State<SignupPage> {
   },
 ),
                 const SizedBox(height: 33,),
-                BasicAppButton(title: "Create Account", onPress: () async {
-                  var result= await sL<SignupWithEmailPasswordUseCase>().call(
-                    params: CreateUserRequest(name: nameController.text.toString(),
-                        email: emailController.text.toString(),
-                        password: passwordController.text.toString())
-                  );
-                  result.fold(
-                      (l){
-                        ScaffoldMessenger.of(context).
-                        showSnackBar(SnackBar(content: Text(l),
-                          backgroundColor: Colors.red,));
-                      },
-                          (r){
-                            Navigator.pushAndRemoveUntil(
-                                context,
-                                MaterialPageRoute(builder: (context) => const BottomNavPage()),
-                                    (Route<dynamic> route) => false);
-
-
-
-                      });
-                }),
+                BlocBuilder<AuthBloc, AuthState>(
+                  buildWhen: (previous, current) => previous.loadingSignUp!=current.loadingSignUp,
+                   builder: (context, state) {
+                   return BasicAppButton(title: "Create Account", onPress: () async {
+                  context.read<AuthBloc>().add(SignUpWithEmailAndPassword(
+                      name: nameController.text.toString(),
+                      email: emailController.text.toString(),
+                      password: passwordController.text.toString(), context: context));
+                  },loading: state.loadingSignUp,);
+  },
+),
                 const SizedBox(height: 29,),
                 const Row(
                   children: [

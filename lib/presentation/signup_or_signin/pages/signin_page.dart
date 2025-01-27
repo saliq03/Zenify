@@ -88,33 +88,18 @@ class _SignInPageState extends State<SignInPage> {
                   ],
                 ),
                 const SizedBox(height: 10),
-                BasicAppButton(title: "Sign In", onPress: () async {
-
-
-
-                  var result =await sL<SigninWithEmailPasswordUseCase>().call(
-                    params: LoginUserRequest(
-                        email: emailController.text.toString(),
-                        password: passwordController.text.toString())
-                  );
-                  result.fold(
-                          (l){
-                            ScaffoldMessenger.of(context).
-                            showSnackBar(SnackBar(content: Text(l),
-                              backgroundColor: Colors.green,));
-
-                          },
-                          (r){
-
-                            Navigator.pushAndRemoveUntil(
-                                context,
-                                MaterialPageRoute(builder: (context) => const BottomNavPage()),
-                                    (Route<dynamic> route) => false);
-
-                      });
-                }),
+                BlocBuilder<AuthBloc, AuthState>(
+                  buildWhen: (previous, current) => previous.loadingSignIn!=current.loadingSignIn,
+               builder: (context, state) {
+               return BasicAppButton(title: "Sign In", onPress: () async {
+                context.read<AuthBloc>().add(SignInWithEmailAndPassword(
+                    email: emailController.text.toString(),
+                    password: passwordController.text.toString(), context: context));
+                },loading: state.loadingSignIn,);
+  },
+),
                 const SizedBox(height: 29,),
-                Row(
+                const Row(
                   children: [
                     Expanded(child: Divider(color: Colors.grey,height: 1,)),
                     Text("  Or  ",style: TextStyle(fontSize: 12,fontWeight: FontWeight.w400),),

@@ -67,7 +67,7 @@ class AuthFirebaseServiceImpl extends AuthFirebaseService{
     UserModel userModel=UserModel(name: user.name, email: data.user!.email!);
     FirebaseFirestore.instance.collection("Users").doc(data.user?.email).
     set(userModel.toJson());
-
+    sL<SetLoginKeyUseCase>().call(params: true);
       return const Right('Signup was successful');
     } on FirebaseAuthException catch (e){
 
