@@ -68,7 +68,9 @@ class PlaylistWidget extends StatelessWidget {
                     Text("See More",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w400,color: context.isDarkMode? const Color(0xffC6C6C6) : const Color(0xff131313)),)
                   ],),
                 const SizedBox(height: 20,),
-                _songs(state.playlist)
+                // _songs(state.playlist)
+                Text(state.playlist.length.toString(),style: TextStyle(color: Colors.white),)
+
               ],
             );
           }else{

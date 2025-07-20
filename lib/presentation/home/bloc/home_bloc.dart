@@ -21,7 +21,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState>{
     on<GetPlaylist>(_getPlaylist);
     on<FetchArtists>(_fetchArtists);
   }
-
+// fetch all songs
   void _fetchNewsSongs(FetchNewsSongs event, Emitter<HomeState> emit) async {
     var result= await sL<GetNewsSongsUseCase>().call();
     result.fold(
